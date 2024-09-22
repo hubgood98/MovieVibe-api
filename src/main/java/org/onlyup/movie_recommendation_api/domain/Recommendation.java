@@ -5,25 +5,25 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "ratings")
-public class Rating {
-
+@Table(name = "recommendations")
+public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ratingId;
+    private Long recommendationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_id",nullable = false)
+    @JoinColumn(name = "u_id", nullable = false)  // user_id
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)//데이터가 실제로 필요할 때까지 미리 로드하지 않음(메모리 절약효과)
-    @JoinColumn(name = "m_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "m_id", nullable = false)  // movie_id
     private Movie movie;
 
     @Column(nullable = false)
-    private Float rating;
+    private Float score;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
+
 }
