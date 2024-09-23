@@ -1,9 +1,11 @@
 package org.onlyup.movie_recommendation_api.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 @Entity
 @Table(name = "recommendations")
 public class Recommendation {

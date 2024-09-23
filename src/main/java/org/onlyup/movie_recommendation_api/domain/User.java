@@ -15,7 +15,7 @@ public class User {
     private Long uId; //유져 ID
 
     @Column(unique = true, nullable = false)
-    private String accountId;
+    private String accountId; //로그인할때 사용하는 아이디
 
     @Column(nullable = false)
     private String username;
@@ -28,4 +28,7 @@ public class User {
 
     @Temporal(TemporalType.DATE) //날짜정보만 저장 (시간은 무시)
     private Date createdAt;
+
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;//삭제여부
 }
