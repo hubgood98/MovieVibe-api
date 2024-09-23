@@ -30,4 +30,5 @@ public class Movie {
     @Column(name = "average_rating")
     private Float averageRating;
 
+
 }

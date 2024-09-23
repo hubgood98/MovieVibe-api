@@ -27,9 +27,22 @@ public class UserService {
     }
 
     public List<User> getAllUsers(){
-        return userRepository.findAll();
+        return userRepository.findByisDeletedFalse();
     }
 
+    public void deleteUser(Long id){
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(User::markAsDeleted);
+    }
+
+    public void deleteByAccountId(String accountId){
+        Optional<User> user = userRepository.findByAccountId(accountId);
+
+        user.ifPresent(u -> {
+            u.markAsDeleted();
+            userRepository.save(u);
+        });
+    }
 
 
 }

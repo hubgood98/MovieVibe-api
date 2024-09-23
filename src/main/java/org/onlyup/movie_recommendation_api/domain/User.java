@@ -1,10 +1,11 @@
 package org.onlyup.movie_recommendation_api.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-
 import java.util.Date;
 
+@Builder
 @Getter
 @Entity
 @Table(name = "users")
@@ -30,5 +31,26 @@ public class User {
     private Date createdAt;
 
     @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted = false;//삭제여부
+    private boolean isDeleted = false; //삭제여부
+
+    public User(String accountId, String username, String password, String email)
+    {
+        this.accountId = accountId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.createdAt = new Date();
+        this.isDeleted = false;
+    }
+
+    //기본 생성자(JPA에서 필요)
+    protected User() {
+        this.createdAt = new Date();
+        this.isDeleted = false;
+    }
+
+
+    public void markAsDeleted() {
+        this.isDeleted = true;
+    }
 }
