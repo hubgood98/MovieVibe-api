@@ -33,14 +33,14 @@ public class User {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false; //삭제여부
 
-    public User(String accountId, String username, String password, String email)
-    {
+    public User(Long uId, String accountId, String username, String password, String email, Date createdAt, boolean isDeleted) {
+        this.uId = uId;
         this.accountId = accountId;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.createdAt = new Date();
-        this.isDeleted = false;
+        this.createdAt = createdAt;
+        this.isDeleted = isDeleted;
     }
 
     //기본 생성자(JPA에서 필요)
@@ -48,7 +48,6 @@ public class User {
         this.createdAt = new Date();
         this.isDeleted = false;
     }
-
 
     public void markAsDeleted() {
         this.isDeleted = true;

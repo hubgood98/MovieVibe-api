@@ -1,5 +1,6 @@
 package org.onlyup.movie_recommendation_api.service;
 
+import lombok.RequiredArgsConstructor;
 import org.onlyup.movie_recommendation_api.client.TmdbClient;
 import org.onlyup.movie_recommendation_api.domain.Movie;
 import org.onlyup.movie_recommendation_api.repository.MovieRepository;
@@ -11,13 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class MovieService {
 
-    //TMDB를 사용하여 Movie 정보를 가져오기
-    @Autowired
     private MovieRepository movieRepository;
-
-    @Autowired
     private TmdbClient tmdbClient;
 
     @Value("${movie-recommendation-api.api.key")
