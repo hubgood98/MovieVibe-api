@@ -30,5 +30,7 @@ public class Movie {
     @Column(name = "average_rating")
     private Float averageRating;
 
+    @Column(name = "poster_path")
+    private String posterPath;
 
 }

@@ -1,0 +1,3 @@
+movie-recommendation-api:
+  api:
+    key: "${HIDDEN_API_KEY}"
