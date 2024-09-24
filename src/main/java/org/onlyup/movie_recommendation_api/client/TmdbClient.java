@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "tmdbClient", url = "https://api.themoviedb.org/3/movie")
 public interface TmdbClient {
 
-    @GetMapping("/")
+    @GetMapping("/{movieId}")
     Movie fetchMovieDetails(@PathVariable("movieId") Long movieId,
                             @RequestParam("api_key") String apiKey);
 }
