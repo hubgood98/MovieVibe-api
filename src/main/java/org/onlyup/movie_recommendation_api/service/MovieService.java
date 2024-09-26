@@ -27,20 +27,11 @@ public class MovieService {
         return movieRepository.findByTitle(title);
     }
 
-//    //장르
-//    public List<Movie> findByGenre(String genre) {
-//        return movieRepository.findByGenre(genre);
-//    }
-
     // 개봉일로 영화 검색
     public List<Movie> findByReleaseDate(Date releaseDate) {
         return movieRepository.findByReleaseDate(releaseDate);
     }
 
-//    // 장르와 개봉일로 영화 검색
-//    public List<Movie> findByGenreAndReleaseDate(String genre, Date releaseDate) {
-//        return movieRepository.findByGenreAndReleaseDate(genre, releaseDate);
-//    }
 
 
 }
