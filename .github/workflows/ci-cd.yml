@@ -1,21 +1,21 @@
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches:
-      - master  # main 브랜치에 푸시할 때 작업 실행
-
-jobs:
-  build:
-    runs-on: ubuntu-latest  # Ubuntu 최신 버전
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # 코드 체크아웃
-
-      - name: Build with Maven
-        run: mvn clean install -DskipTests  # Maven으로 빌드, 테스트 생략
-
-      - name: Run application
-        run: mvn spring-boot:run  # Spring Boot 애플리케이션 실행
-        env:
-          HIDDEN_API_KEY: ${{ secrets.HIDDEN_API_KEY }}  # 비밀 키 설정
+#name: CI/CD Pipeline
+#
+#on:
+#  push:
+#    branches:
+#      - master
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest  # Ubuntu 최신 버전
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2  # 코드 체크아웃
+#
+#      - name: Build with Maven
+#        run: mvn clean install -DskipTests  # Maven으로 빌드, 테스트 생략
+#
+#      - name: Run application
+#        run: mvn spring-boot:run  # Spring Boot 애플리케이션 실행
+#        env:
+#          HIDDEN_API_KEY: ${{ secrets.HIDDEN_API_KEY }}  # 비밀 키 설정

@@ -1,6 +1,6 @@
 movie-recommendation-api:
   api:
-    key: "${HIDDEN_API_KEY}"
+    key: "663790bc503369ee6df38ca4045f5837"
 
 spring:
   datasource:

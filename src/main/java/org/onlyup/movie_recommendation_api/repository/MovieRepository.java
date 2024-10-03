@@ -15,5 +15,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findByReleaseDate(Date releaseDate);
 
+    List<Movie> findByTitleContaining(String title); // 제목의 일부로 검색
 
 }
