@@ -15,7 +15,7 @@ import java.util.Optional;
 public class MovieService {
 
     private MovieRepository movieRepository;
-    private TmdbClient tmdbClient;
+    final private TmdbClient tmdbClient;
 
 
     public Movie saveMovie(Movie movie) {

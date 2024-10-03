@@ -12,8 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TMDbMovieService {
 
-    private TmdbClient tmdbClient;
-    private MovieService movieService;
+    final private TmdbClient tmdbClient;
+    final private MovieService movieService;
 
     @Value("${movie-recommendation-api.api.key")
     private String apiKey;
