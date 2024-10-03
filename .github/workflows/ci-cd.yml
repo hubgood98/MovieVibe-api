@@ -12,11 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2  # 코드 체크아웃
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '21'  # 사용할 JDK 버전
-
       - name: Build with Maven
         run: mvn clean install -DskipTests  # Maven으로 빌드, 테스트 생략
 
