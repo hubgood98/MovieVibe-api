@@ -1,7 +1,10 @@
 package org.onlyup.movie_recommendation_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
@@ -13,41 +16,43 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // TMDb에서의 영화 ID
+    private Long id;
 
-    @Column(nullable = false)
-    private String title; // 영화 제목
+    @NotNull
+    private String title;
 
-    @Column(name = "original_title", nullable = false)
-    private String originalTitle; // 원제
+    @JsonProperty("original_title")
+    private String originalTitle;
 
-    @Column(columnDefinition = "TEXT")
-    private String overview; // 영화 설명
+    @Column(length = 2000)
+    private String overview;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "release_date")
-    private Date releaseDate; // 개봉일
+    @JsonProperty("release_date")
+    private Date releaseDate;
 
-    @Column(name = "original_language")
-    private String originalLanguage; // 원어
+    @Setter
+    @JsonProperty("poster_path")
+    private String posterPath;
 
-    private boolean adult; // 성인 영화 여부
+    @Setter
+    private String w500PosterPath; // w500 사이즈 포스터 경로
 
-    private double popularity; // 인기 점수
+    @JsonProperty("backdrop_path")
+    private String backdropPath;
 
-    @Column(name = "vote_count")
-    private int voteCount; // 투표 수
+    private Double popularity;
 
-    @Column(name = "vote_average")
-    private double voteAverage; // 평균 평점
+    @JsonProperty("vote_average")
+    private Double voteAverage;
+
+    @JsonProperty("vote_count")
+    private Integer voteCount;
 
     @ElementCollection
-    @Column(name = "genre_ids")
-    private List<Integer> genreIds; // 장르 ID 리스트
+    @JsonProperty("genre_ids")
+    private List<Integer> genreIds; // 장르 ID 목록
 
-    @Column(name = "poster_path")
-    private String posterPath; // 포스터 경로
+    private Boolean adult;
 
-    @Column(name = "backdrop_path")
-    private String backdropPath; // 배경 이미지 경로
+    private Boolean video;
 }

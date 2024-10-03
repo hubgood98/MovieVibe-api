@@ -9,7 +9,4 @@ import java.util.List;
 public class NowPlayingResponse {
     private List<Movie> results;
 
-    private void setResults(final List<Movie> results){
-        this.results = results;
-    }
 }

@@ -17,7 +17,6 @@ public class MovieService {
     private MovieRepository movieRepository;
     final private TmdbClient tmdbClient;
 
-
     public Movie saveMovie(Movie movie) {
         return movieRepository.save(movie);
     }
