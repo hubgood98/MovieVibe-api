@@ -25,10 +25,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException{
 
         //클라이언트 요청에서 username,password 추출
-        String accountId = obtainUsername(request);
-        String password = obtainPassword(request);
-
-        System.out.println(accountId);
+        String accountId = request.getParameter("accountId");
+        String password = request.getParameter("password");
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(accountId, password,null);
 
@@ -37,10 +35,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
     //로그인 성공시 실행하는 메서드
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        System.out.println("successful authentication");
+        System.out.println("인증 성공!");
     }
 
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        System.out.println("fail");
+        System.out.println("인증 실패..");
     }
 }

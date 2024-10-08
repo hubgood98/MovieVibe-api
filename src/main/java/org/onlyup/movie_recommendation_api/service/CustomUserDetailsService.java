@@ -22,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         User userData = userRepository.findByAccountId(username);
 
+        System.out.println(userData.getUsername());
         if(userData != null) {
             return new CustomUserDetails(userData);
         }
