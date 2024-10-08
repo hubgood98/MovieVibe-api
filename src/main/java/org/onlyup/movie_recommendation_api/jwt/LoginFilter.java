@@ -1,5 +1,7 @@
 package org.onlyup.movie_recommendation_api.jwt;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,6 +9,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.IOException;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
@@ -24,9 +28,19 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String accountId = obtainUsername(request);
         String password = obtainPassword(request);
 
+        System.out.println(accountId);
+
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(accountId, password,null);
 
         //Token에 담은 검증을 위한 AuthenticationManager
         return authenticationManager.authenticate(authToken);
+    }
+    //로그인 성공시 실행하는 메서드
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        System.out.println("successful authentication");
+    }
+
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        System.out.println("fail");
     }
 }
