@@ -49,7 +49,8 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth)-> auth
-                        .requestMatchers("/login","/","join").permitAll()
+                        .requestMatchers("/login", "/", "/join", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/movies/**").permitAll() //나중에 유져 제한으로 변경
                         .requestMatchers("/admin").hasRole("ADMIN")
                         //그 외 요청
                         .anyRequest().authenticated());
