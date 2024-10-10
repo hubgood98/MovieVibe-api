@@ -31,13 +31,13 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return userEntity.getPassword();
+    public String getUsername() {
+        return userEntity.getAccountId();
     }
 
     @Override
-    public String getUsername() {
-        return userEntity.getAccountId();
+    public String getPassword() {
+        return userEntity.getPassword();
     }
 
     //특정권한이 블럭되었는지
