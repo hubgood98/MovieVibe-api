@@ -40,6 +40,7 @@ public class JWTUtil {
         return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
     }
 
+    //토큰을 생성하는 메서드 - payload에 추가할 데이터
     public String createJwt(String accouontId, String role, Long expiredMs) {
 
         return Jwts.builder()
