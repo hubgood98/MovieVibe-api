@@ -13,3 +13,5 @@ spring:
       # MySQL Dialect 설정
       dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
+  jwt:
+    secret: qksjdofkejqndkfmoqkmdmieu@!jfkas!@fdfa
