@@ -52,7 +52,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = jwtUtil.createJwt(accountId,role,60*60*10L);
 
-        response.addHeader(token,"Bearer "+token);
+        response.addHeader("Authorization","Bearer "+token);
     }
 
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
