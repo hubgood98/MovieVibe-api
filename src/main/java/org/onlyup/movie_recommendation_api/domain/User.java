@@ -38,7 +38,7 @@ public class User {
 
 
     //기본 생성자(JPA에서 필요)
-    protected User() {
+    public User() {
         this.createdAt = new Date();
         this.isDeleted = false;
     }
