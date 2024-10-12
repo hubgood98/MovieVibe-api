@@ -1,5 +1,6 @@
 package org.onlyup.movie_recommendation_api.config;
 
+import org.onlyup.movie_recommendation_api.jwt.JWTFilter;
 import org.onlyup.movie_recommendation_api.jwt.JWTUtil;
 import org.onlyup.movie_recommendation_api.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -64,7 +66,10 @@ public class SecurityConfig {
         * addFilterAt 원하는 자리에 등록
          */
         http
+                .addFilterBefore(new JWTFilter(jwtUtil), LogoutFilter.class);
+        http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
         //세션 설정
         http
                 .sessionManagement((session) -> session
