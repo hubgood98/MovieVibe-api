@@ -23,10 +23,10 @@ public class JWTFilter extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        //request에서 Authorization 헤더를 찾음
+        String authorization = request.getHeader("Authorization");
 
-        String authorizationHeader = request.getHeader("Authorization");
-
-        if(authorizationHeader == null && !authorizationHeader.startsWith("Bearer ")) {
+        if(authorization == null || !authorization.startsWith("Bearer ")) {
 
             System.out.println("Token is null");
             filterChain.doFilter(request, response);
@@ -35,7 +35,7 @@ public class JWTFilter extends OncePerRequestFilter{
             return;
         }
 
-        String token = authorizationHeader.split(" ")[1];
+        String token = authorization.split(" ")[1];
 
         //토큰 소멸 시간 검증로직
         if(jwtUtil.isExpired(token)){
@@ -49,7 +49,7 @@ public class JWTFilter extends OncePerRequestFilter{
         String accountId = jwtUtil.getAccountId(token);
         String role = jwtUtil.getRole(token);
 
-        User user = new User(accountId,"dfasdf","dg","dfkjas",role);
+        User user = new User(accountId,"dfasdf","secretName","dfkjas",role);
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
         //스프링 시큐리티 인증토큰 생성

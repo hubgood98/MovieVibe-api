@@ -44,7 +44,7 @@ public class UserRegisterService {
                 encodedPassword,
                 registerRequest.getUsername(),
                 registerRequest.getEmail(),
-                "ROLE_USER"
+                registerRequest.getRole()
         );
 
         userRepository.save(us);
