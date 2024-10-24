@@ -28,9 +28,16 @@ public class RatingService {
         User user = userRepository.findById(userId).orElseThrow(()->new UserAlreadyExistsException("User with ID : "+userId+" Not Found"));
         Movie movie = movieRepository.findById(movieId).orElseThrow(()->new RuntimeException("Movie Not Found"));
 
-        Rating rat = new Rating(user,movie,rating,new Date());
+        Rating existRatings = ratingRepository.findByUserAndMovie(user,movie);
 
-        return ratingRepository.save(rat);
+        if(existRatings != null){
+            existRatings.updateRating(rating);
+            return ratingRepository.save(existRatings);
+        }else {
+            Rating rat = new Rating(user,movie,rating,new Date());
+            return ratingRepository.save(rat);
+        }
+
     }
 
 }
