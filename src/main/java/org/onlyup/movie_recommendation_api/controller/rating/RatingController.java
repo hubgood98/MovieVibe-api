@@ -1,5 +1,6 @@
 package org.onlyup.movie_recommendation_api.controller.rating;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onlyup.movie_recommendation_api.domain.Rating;
 import org.onlyup.movie_recommendation_api.dto.rating.RatingRequest;
 import org.onlyup.movie_recommendation_api.service.rating.RatingService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/rating")
+@Tag(name = "영화 정보 평가데이터 관리")
 public class RatingController {
 
     private final RatingService ratingService;
