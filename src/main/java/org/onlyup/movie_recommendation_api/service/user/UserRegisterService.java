@@ -1,4 +1,4 @@
-package org.onlyup.movie_recommendation_api.service;
+package org.onlyup.movie_recommendation_api.service.user;
 
 import jakarta.transaction.Transactional;
 import org.onlyup.movie_recommendation_api.domain.User;

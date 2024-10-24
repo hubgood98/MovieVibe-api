@@ -1,7 +1,7 @@
 package org.onlyup.movie_recommendation_api.controller;
 
 import org.onlyup.movie_recommendation_api.dto.user.RegisterRequest;
-import org.onlyup.movie_recommendation_api.service.UserRegisterService;
+import org.onlyup.movie_recommendation_api.service.user.UserRegisterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
