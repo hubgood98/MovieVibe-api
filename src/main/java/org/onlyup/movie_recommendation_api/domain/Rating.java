@@ -28,4 +28,19 @@ public class Rating {
     @Temporal(TemporalType.DATE)
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
+
+    public Rating(User user, Movie movie, Float rating, Date createdAt) {
+        this.user = user;
+        this.movie = movie;
+        this.rating = rating;
+        this.createdAt = createdAt;
+    }
+
+    public Rating() {
+
+    }
+
+    public void updateRating(Float newRating){
+        this.rating = newRating;
+    }
 }
