@@ -1,7 +1,6 @@
 package org.onlyup.movie_recommendation_api.config;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.tomcat.util.file.ConfigurationSource;
 import org.onlyup.movie_recommendation_api.jwt.JWTFilter;
 import org.onlyup.movie_recommendation_api.jwt.JWTUtil;
 import org.onlyup.movie_recommendation_api.jwt.LoginFilter;

@@ -53,8 +53,5 @@ public class TMDbMovieService {
         }
     }
 
-    public List<Movie> searchMoviesByTitle(String title){
-        return movieRepository.findByTitleContaining(title);
-    }
 
 }
