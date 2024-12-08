@@ -1,17 +1,12 @@
 package org.onlyup.movie_recommendation_api.service;
 
 import lombok.RequiredArgsConstructor;
-import org.onlyup.movie_recommendation_api.client.TmdbClient;
 import org.onlyup.movie_recommendation_api.domain.Movie;
 import org.onlyup.movie_recommendation_api.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
