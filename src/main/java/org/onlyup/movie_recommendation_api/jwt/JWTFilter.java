@@ -28,9 +28,7 @@ public class JWTFilter extends OncePerRequestFilter{
 
         if(authorization == null || !authorization.startsWith("Bearer ")) {
 
-            System.out.println("Token is null");
             filterChain.doFilter(request, response);
-
             //조건이 해당되면 메서드 종료
             return;
         }
@@ -39,9 +37,7 @@ public class JWTFilter extends OncePerRequestFilter{
 
         //토큰 소멸 시간 검증로직
         if(jwtUtil.isExpired(token)){
-            System.out.println("Token is expired");
             filterChain.doFilter(request, response);
-
             return;
         }
 
