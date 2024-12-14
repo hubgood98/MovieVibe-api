@@ -1,6 +1,5 @@
 package org.onlyup.movie_recommendation_api.jwt;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
