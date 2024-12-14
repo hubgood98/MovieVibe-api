@@ -10,6 +10,7 @@ public class MovieRecommendationApiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MovieRecommendationApiApplication.class, args);
+
     }
 
 }

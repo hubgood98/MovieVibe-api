@@ -68,9 +68,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
 
         //필터 추가
-        http.addFilterBefore(new RequestLoggingFilter(), UsernamePasswordAuthenticationFilter.class); // 요청 로그 필터 추가
-        http.addFilterBefore(new JWTFilter(jwtUtil), LogoutFilter.class);
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new RequestLoggingFilter(), UsernamePasswordAuthenticationFilter.class) // 요청 로그 필터 추가
+                .addFilterBefore(new JWTFilter(jwtUtil), LogoutFilter.class)
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         //세션 설정
         http.sessionManagement((session) -> session

@@ -40,29 +40,29 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String accountId;
         String password;
 
-        // Content-Type 확인
-        String contentType = request.getContentType();
-
         try {
-            if ("application/json".equals(contentType)) {
-                // JSON 요청 본문에서 데이터 읽기
-                Map<String, String> jsonMap = objectMapper.readValue(getRequestBody(request), new TypeReference<Map<String, String>>() {});
-                accountId = jsonMap.get("accountId");
-                password = jsonMap.get("password");
-            } else {
-                // 폼 데이터에서 데이터 읽기
-                accountId = request.getParameter("accountId");
-                password = request.getParameter("password");
+            // Content-Type이 application/json인지 확인
+            if (!"application/json".equalsIgnoreCase(request.getContentType())) {
+                throw new RuntimeException("Unsupported Content-Type: " + request.getContentType());
+            }
+
+            // JSON 본문 읽기 및 파싱
+            Map<String, String> credentials = objectMapper.readValue(request.getInputStream(), Map.class);
+
+            accountId = credentials.get("accountId");
+            password = credentials.get("password");
+
+            if (accountId == null || password == null) {
+                throw new RuntimeException("Missing accountId or password in request body");
             }
         } catch (IOException e) {
             throw new RuntimeException("Failed to process request", e);
         }
 
-        // 인증 토큰 생성
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(accountId, password, null);
-
-        // 인증 시도
-        return authenticationManager.authenticate(authToken);
+        // 인증 객체 생성 및 반환
+        return authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(accountId, password)
+        );
     }
 
 
@@ -80,9 +80,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String token = jwtUtil.createJwt(accountId, role,60*60*10L);
 
         response.addHeader("Authorization","Bearer "+token);
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:6709");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.addHeader("Access-Control-Allow-Headers", "*");
     }
 
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
