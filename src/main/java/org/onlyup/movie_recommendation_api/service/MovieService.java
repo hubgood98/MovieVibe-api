@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,13 @@ public class MovieService {
     public Page<Movie> searchMovies(String title,boolean adult, Pageable pageable) {
 
         return movieRepository.findByTitleContainingAndAdult(title, adult, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Movie getMovieById(Long id) {
+        Optional<Movie> movie = movieRepository.findById(id);
+
+        return movie.orElseThrow(() -> new NotFoundException("Movie not found"));
     }
 
 
