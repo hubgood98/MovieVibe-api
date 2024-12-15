@@ -50,7 +50,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(Customizer.withDefaults())
+                .cors(c->c.configurationSource(corsConfigurationSource()))
                 //csrf
                 .csrf(AbstractHttpConfigurer::disable)
                 //from 로그인방식
