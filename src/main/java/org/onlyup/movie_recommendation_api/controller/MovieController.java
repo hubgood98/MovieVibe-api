@@ -23,14 +23,16 @@ public class MovieController {
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false) Boolean adult,
             @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false, defaultValue = "0") int page) {
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false) String voteAverageOrder,
+            @RequestParam(required = false) String voteCountOrder) {
 
         Pageable pageable = PageRequest.of(page, size);
-
         boolean isAdult = (adult != null) ? adult : false;
 
-        return movieService.searchMovies(title, isAdult, pageable);
+        return movieService.searchMovies(title, isAdult, pageable, voteAverageOrder, voteCountOrder);
     }
+
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<Movie> getMovieDetail(@PathVariable Long id) {
