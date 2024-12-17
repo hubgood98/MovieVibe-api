@@ -18,26 +18,31 @@ public class RatingService {
     private final MovieRepository movieRepository;
     private final UserRepository userRepository;
 
-    RatingService(RatingRepository ratingRepository, MovieRepository movieRepository, UserRepository userRepository){
+    RatingService(RatingRepository ratingRepository, MovieRepository movieRepository, UserRepository userRepository) {
         this.ratingRepository = ratingRepository;
         this.movieRepository = movieRepository;
         this.userRepository = userRepository;
     }
 
-    public Rating createRating(Long userId, Long movieId, Float rating){
-        User user = userRepository.findById(userId).orElseThrow(()->new UserAlreadyExistsException("User with ID : "+userId+" Not Found"));
-        Movie movie = movieRepository.findById(movieId).orElseThrow(()->new RuntimeException("Movie Not Found"));
+    public Rating createRating(Long userId, Long movieId, int ratingValue, String comment) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException("User with ID : " + userId + " Not Found"));
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie Not Found"));
 
-        Rating existRatings = ratingRepository.findByUserAndMovie(user,movie);
+        Rating existRating = ratingRepository.findByUserAndMovie(user, movie);
 
-        if(existRatings != null){
-            existRatings.updateRating(rating);
-            return ratingRepository.save(existRatings);
-        }else {
-            Rating rat = new Rating(user,movie,rating,new Date());
-            return ratingRepository.save(rat);
+        if (existRating != null) {
+            existRating.changeRating(ratingValue, comment);
+        } else {
+            existRating = new Rating(user, movie, ratingValue, new Date(), comment);
+            movie.voteCountUp(); //투표수 증가
         }
 
+        //레포지트리에서 평균 계산후 반영
+        Double newAverage = ratingRepository.averageRatingByMovie(movie);
+        movie.updateVoteAverage(newAverage);
+        movieRepository.save(movie);
+
+        return ratingRepository.save(existRating);
     }
 
 }

@@ -55,4 +55,13 @@ public class Movie {
     private Boolean adult;
 
     private Boolean video;
+
+    public void voteCountUp() {
+        this.voteCount++;
+    }
+
+    //평점 반영메서드
+    public void updateVoteAverage(Double average) {
+        this.voteAverage = average;
+    }
 }

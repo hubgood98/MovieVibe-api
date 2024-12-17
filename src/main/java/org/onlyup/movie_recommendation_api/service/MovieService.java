@@ -59,6 +59,11 @@ public class MovieService {
         return movie.orElseThrow(() -> new NotFoundException("Movie not found"));
     }
 
+    @Transactional
+    public void deleteMovieById(Long id) {
+        movieRepository.deleteById(id);
+    }
+
 
 
 

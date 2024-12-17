@@ -40,13 +40,18 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String password;
 
         try {
-            // Content-Type이 application/json인지 확인
             if (!"application/json".equalsIgnoreCase(request.getContentType())) {
                 throw new RuntimeException("Unsupported Content-Type: " + request.getContentType());
             }
 
-            // JSON 본문 읽기 및 파싱
-            Map<String, String> credentials = objectMapper.readValue(request.getInputStream(), Map.class);
+            Map<String, String> credentials;
+
+            // Check if the request body is empty
+            if (request.getInputStream().available() > 0) {
+                credentials = objectMapper.readValue(request.getInputStream(), Map.class);
+            } else {
+                throw new RuntimeException("Empty request body");
+            }
 
             accountId = credentials.get("accountId");
             password = credentials.get("password");
@@ -58,12 +63,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             throw new RuntimeException("Failed to process request", e);
         }
 
-        // 인증 객체 생성 및 반환
         return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(accountId, password)
         );
     }
-
 
     //로그인 성공시 실행하는 메서드
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
