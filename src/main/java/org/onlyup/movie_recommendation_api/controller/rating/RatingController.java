@@ -27,7 +27,7 @@ public class RatingController {
     @Operation(description = "영화 평가 생성 및 갱신 메서드")
     public ResponseEntity<Rating> createRating(@RequestBody RatingRequest ratingRequest) {
 
-        Rating createdRating = ratingService.createRating(
+        Rating createdRating = ratingService.createOrUpdateRating(
                 ratingRequest.getUserId(),
                 ratingRequest.getMovieId(),
                 ratingRequest.getRatingValue(),

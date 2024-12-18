@@ -8,6 +8,7 @@ import org.onlyup.movie_recommendation_api.repository.MovieRepository;
 import org.onlyup.movie_recommendation_api.repository.RatingRepository;
 import org.onlyup.movie_recommendation_api.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -24,21 +25,33 @@ public class RatingService {
         this.userRepository = userRepository;
     }
 
-    public Rating createRating(Long userId, Long movieId, int ratingValue, String comment) {
+    @Transactional
+    public Rating createOrUpdateRating(Long userId, Long movieId, int ratingValue, String comment) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserAlreadyExistsException("User with ID : " + userId + " Not Found"));
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie Not Found"));
 
         Rating existRating = ratingRepository.findByUserAndMovie(user, movie);
 
+        double newAverage;
+        int voteCount = movie.getVoteCount();
+        double totalScore = movie.getVoteAverage() * voteCount;
+
+        //기존에 작성한 평가가 있는경우
         if (existRating != null) {
+
+            int oldRatingValue = existRating.getRatingValue();
             existRating.changeRating(ratingValue, comment);
+            totalScore = totalScore - oldRatingValue + ratingValue;
+            newAverage = totalScore / voteCount;
         } else {
             existRating = new Rating(user, movie, ratingValue, new Date(), comment);
-            movie.voteCountUp(); //투표수 증가
+            movie.voteCountUp();
+            voteCount++;
+            totalScore += ratingValue;
+            newAverage = totalScore / voteCount;
         }
 
-        //레포지트리에서 평균 계산후 반영
-        Double newAverage = ratingRepository.averageRatingByMovie(movie);
+        //평균 반영
         movie.updateVoteAverage(newAverage);
         movieRepository.save(movie);
 

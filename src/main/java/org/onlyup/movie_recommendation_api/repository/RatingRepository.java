@@ -14,7 +14,4 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     //기존에 해당영화에 평가했는지 보는 메서드
     Rating findByUserAndMovie(User user, Movie movie);
 
-    @Query("SELECT AVG(r.ratingValue) FROM Rating r WHERE r.movie = :movie")
-    Double averageRatingByMovie(@Param("movie") Movie movie);
-
 }
