@@ -1,5 +1,6 @@
 package org.onlyup.movie_recommendation_api.controller.rating;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onlyup.movie_recommendation_api.domain.Rating;
 import org.onlyup.movie_recommendation_api.dto.rating.RatingRequest;
@@ -23,10 +24,17 @@ public class RatingController {
     }
 
     @PostMapping
+    @Operation(description = "영화 평가 생성 및 갱신 메서드")
     public ResponseEntity<Rating> createRating(@RequestBody RatingRequest ratingRequest) {
 
-        Rating createRating = ratingService.createRating(ratingRequest.getUserId(),ratingRequest.getMovieId(),ratingRequest.getRatingValue());
+        Rating createdRating = ratingService.createRating(
+                ratingRequest.getUserId(),
+                ratingRequest.getMovieId(),
+                ratingRequest.getRatingValue(),
+                ratingRequest.getComment()
+        );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createRating);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdRating);
     }
+
 }

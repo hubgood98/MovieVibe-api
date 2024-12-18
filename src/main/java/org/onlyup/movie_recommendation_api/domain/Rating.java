@@ -26,7 +26,7 @@ public class Rating {
 
     @Column(nullable = false)
     @Min(1)
-    @Max(5)
+    @Max(10)
     private int ratingValue;
 
     @Column(length = 500)

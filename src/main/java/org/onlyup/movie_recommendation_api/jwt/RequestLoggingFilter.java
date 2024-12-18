@@ -20,11 +20,14 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        logger.info("Request URI: {}, Method: {}", request.getRequestURI(), request.getMethod());
-        logger.info("Request Params: {}", request.getParameterMap());
-        logger.info("Request Body: {}", getRequestBody(request));
 
-        filterChain.doFilter(request, response);
+        CachedBodyHttpServletRequest wrappedRequest = new CachedBodyHttpServletRequest(request);
+
+        logger.info("Request URI: {}, Method: {}", wrappedRequest.getRequestURI(), wrappedRequest.getMethod());
+        logger.info("Request Params: {}", wrappedRequest.getParameterMap());
+        logger.info("Request Body: {}", getRequestBody(wrappedRequest));
+
+        filterChain.doFilter(wrappedRequest, response);
     }
 
     private String getRequestBody(HttpServletRequest request) throws IOException {
