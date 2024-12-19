@@ -1,4 +1,4 @@
-package org.onlyup.movie_recommendation_api.service.rating;
+package org.onlyup.movie_recommendation_api.service;
 
 import org.onlyup.movie_recommendation_api.domain.Movie;
 import org.onlyup.movie_recommendation_api.domain.Rating;
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class RatingService {
@@ -58,4 +60,9 @@ public class RatingService {
         return ratingRepository.save(existRating);
     }
 
+    @Transactional(readOnly = true)
+    public Page<Rating> findRatingsByMovieId(Long movieId, Pageable pageable) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie Not Found"));
+        return ratingRepository.findByMovie(movie, pageable);
+    }
 }

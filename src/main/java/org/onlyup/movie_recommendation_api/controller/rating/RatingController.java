@@ -1,16 +1,17 @@
 package org.onlyup.movie_recommendation_api.controller.rating;
 
+import feign.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.onlyup.movie_recommendation_api.domain.Rating;
 import org.onlyup.movie_recommendation_api.dto.rating.RatingRequest;
-import org.onlyup.movie_recommendation_api.service.rating.RatingService;
+import org.onlyup.movie_recommendation_api.dto.rating.RatingResponse;
+import org.onlyup.movie_recommendation_api.service.RatingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/rating")
@@ -35,6 +36,24 @@ public class RatingController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdRating);
+    }
+
+    @GetMapping("/{movieId}/ratings")
+    public ResponseEntity<Page<RatingResponse>> getRatingsByMovieId(@PathVariable Long movieId, Pageable pageable) {
+
+        Page<Rating> ratings = ratingService.findRatingsByMovieId(movieId, pageable);
+
+        Page<RatingResponse> ratingResponses = ratings.map(rating -> {
+            return new RatingResponse(
+                    rating.getUser().getUId(),
+                    rating.getMovie().getId(),
+                    rating.getRatingValue(),
+                    rating.getComment());
+        });
+
+        return new ResponseEntity<>(ratingResponses,HttpStatus.OK);
+
+
     }
 
 }
